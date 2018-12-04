@@ -325,8 +325,9 @@ public class MyVector<T> {
     public int search(T t, int lo, int hi, boolean flag) {
         if (flag) {
             return binSearch(this.elem, t, lo, hi);
+        }else {
+            return fibSearch(this.elem, t, lo, hi);
         }
-        return 1;
     }
 
     /**
