@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @date 2018-12-04 13:48
  * @since 1.0.0
  */
-public class MyVector<T>{
+public class MyVector<T> {
     /**
      * 默认的数组大小
      */
@@ -16,7 +16,7 @@ public class MyVector<T>{
     /**
      * 装载因子
      */
-    private static final double LOAD_FACTOR = 0.5;
+    private static final float LOAD_FACTOR = 0.5f;
     /**
      * 数组长度  已使用的大小
      */
@@ -113,14 +113,15 @@ public class MyVector<T>{
 
     /**
      * 缩容算法（容量倍减策略）
+     * 相比扩容算法 缩容算法就要简单的多  截取多余的空间即可
      */
     private void shrink() {
         //容器尚未盛满的时候不需要进行扩容
         if (this.size > this.capacity * LOAD_FACTOR) {
             return;
         }
-        //将容量倍减 this.capacity>>1 位运算右移1位 等价于除以2 容器的最小容量不得小于默认值
-        this.capacity = Math.max(this.capacity >> 1, DEFAULT_CAPACITY);
+        //容器的最小容量不得小于默认值
+        this.capacity = Math.max(this.size, DEFAULT_CAPACITY);
         //缓存住原本向量中的数据
         Object[] oldElem = this.elem;
         //创建新的容器
@@ -254,6 +255,7 @@ public class MyVector<T>{
         //遍历元素
         for (int i = 1; i < this.size; i++) {
             if (this.elem[i] instanceof Comparable) {
+                //通过compareTo方法来计算
                 n += ((Comparable) this.elem[i - 1]).compareTo((Comparable) this.elem[i]) > 0 ? 1 : 0;
             } else {
                 //当前元素与其左边元素比较  判断是否有序，这里做的比较简单只是通过hashCode判断
@@ -261,5 +263,51 @@ public class MyVector<T>{
             }
         }
         return n;
+    }
+
+    /**
+     * 低效的有序向量唯一化算法
+     * 算法的耗时取决于while的次数
+     * 并且每次都需要调用remove方法（耗时为O(n-1)~O(1)）
+     * 整个算法的复杂度为O(n^2)
+     * 即便相较于deduplicate方法去掉了find方法 但是复杂度并为发生变化，实际使用中速度提升也比较有限
+     */
+    public int uniquifyLow() {
+        int oldSize = this.size;
+        int i = 1;
+        //送第二个元素开始比较
+        while (i < this.size) {
+            //判断左边的元素是否与当前元素相等
+            if (this.elem[i - 1].equals(this.elem[i])) {
+                //相等则删除当前元素
+                remove(i);
+            } else {
+                //否则判断下一个元素
+                i++;
+            }
+        }
+        return oldSize - this.size;
+    }
+
+    /**
+     * 高效的有序向量唯一化算法
+     * 低效的算法问题的根源在于，同一个元素可以被删除元素的后继（也就是右边的元素）需要多次的前移
+     * 若是以重复的区间为单位删除，性能必然能大幅度的提升
+     * 通过区间删除可以将算法复杂度提升至O(n)
+     */
+    public int uniquify() {
+        //相邻的元素的秩（位置）
+        int i = 0, j = 0;
+        //逐一扫描每个元素
+        while (++j < this.size) {
+            //如果元素相同则不处理，发现不同元素的时候，将元素向前移至紧邻于前者的右侧
+            if (!this.elem[i].equals(this.elem[j])) {
+                this.elem[++i] = this.elem[j];
+            }
+        }
+        this.size = ++i;
+        //通过缩容算法直接将多余的元素全部删除
+        shrink();
+        return j - i;
     }
 }
