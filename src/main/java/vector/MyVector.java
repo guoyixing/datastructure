@@ -1,6 +1,7 @@
-package Vector;
+package vector;
 
-import java.util.ArrayList;
+import utils.Compare;
+import utils.Fib;
 
 /**
  * 扩充向量
@@ -246,6 +247,7 @@ public class MyVector<T> {
         return oldSize - this.size;
     }
 
+
     /**
      * 有序性甄别算法
      */
@@ -254,13 +256,8 @@ public class MyVector<T> {
         int n = 0;
         //遍历元素
         for (int i = 1; i < this.size; i++) {
-            if (this.elem[i] instanceof Comparable) {
-                //通过compareTo方法来计算
-                n += ((Comparable) this.elem[i - 1]).compareTo((Comparable) this.elem[i]) > 0 ? 1 : 0;
-            } else {
-                //当前元素与其左边元素比较  判断是否有序，这里做的比较简单只是通过hashCode判断
-                n += this.elem[i - 1].hashCode() > this.elem[i].hashCode() ? 1 : 0;
-            }
+            //通过compare方法来计算
+            n += Compare.greater(this.elem[i - 1], this.elem[i]) ? 1 : 0;
         }
         return n;
     }
@@ -309,5 +306,85 @@ public class MyVector<T> {
         //通过缩容算法直接将多余的元素全部删除
         shrink();
         return j - i;
+    }
+
+    /**
+     * 有序向量 统一的查询接口
+     * 在查询算法中有一些情况不可以被忽略
+     * 1.元素不存在的时候
+     * 2.元素存在多少个的时候
+     * 对于这两种情况至少要保证
+     * 查询即便失败的情况下也应该给出适合插入的位置（或者给出无法插入的位置如-1）
+     * 如果出现重复的元素，则每组相同的元素也应该根据插入的顺序排序
+     *
+     * @param t    查询的元素
+     * @param lo   查询区间的首位
+     * @param hi   查询区间的末尾
+     * @param flag true的时候采用二分查找 false的时候采用斐波那契查找
+     */
+    public int search(T t, int lo, int hi, boolean flag) {
+        if (flag) {
+            return binSearch(this.elem, t, lo, hi);
+        }
+        return 1;
+    }
+
+    /**
+     * 二分查找A版本
+     * 算法复杂度 O(1.5*logn)
+     *
+     * @param objs 需要搜索的素组
+     * @param t    需要搜索的元素
+     * @param lo   区间的首位
+     * @param hi   区间的末尾
+     */
+    private int binSearch(Object[] objs, T t, int lo, int hi) {
+        //每一次循环 都有可能出现3种情况
+        while (lo < hi) {
+            //获取这次区间的中间元素
+            int mi = (lo + hi) >> 1;
+            if (Compare.less(t, objs[mi])) {
+                //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi]
+                hi = mi;
+            } else if (Compare.less(objs[mi], t)) {
+                //情况2：t大于中间元素 则将搜索的范围缩小至中间元素的位置到hi范围 S(mi,hi)
+                lo = mi + 1;
+            } else {
+                //情况3：命中元素，随即返回
+                return mi;
+            }
+        }
+        //命中失败
+        return -1;
+    }
+
+    /**
+     * 斐波拉契查询算法
+     *
+     * @param objs 需要搜索的素组
+     * @param t    需要搜索的元素
+     * @param lo   区间的首位
+     * @param hi   区间的末尾
+     */
+    private int fibSearch(Object[] objs, T t, int lo, int hi) {
+        //获取长度为区间个数的斐波那契数列
+        Fib fib = new Fib(hi - lo);
+        while (lo < hi) {
+            //将数列的指针指向一个不大于 数组个数的斐波拉契数值
+            while (hi - lo < fib.get()) {
+                fib.prev();
+            }
+            //用这个斐波拉契数获取中间值  -1保证不会超出数组范围
+            int mi = lo + fib.get() - 1;
+            //和二分查找一样的三种情况
+            if (Compare.less(t, objs[mi])) {
+                hi = mi;
+            } else if (Compare.less(objs[mi], t)) {
+                lo = mi + 1;
+            } else {
+                return mi;
+            }
+        }
+        return -1;
     }
 }
