@@ -1,6 +1,6 @@
 package test;
 
-public class Student implements Comparable{
+public class Student implements Comparable {
     public int code;
     public String name;
 
@@ -9,13 +9,22 @@ public class Student implements Comparable{
         this.name = name;
     }
 
+    @Override
     public int compareTo(Object o) {
-        if (this.code > ((Student)o).code){
+        if (this.code > ((Student) o).code) {
             return 1;
-        }else if (this.code < ((Student)o).code){
+        } else if (this.code < ((Student) o).code) {
             return -1;
-        }else {
+        } else {
             return 0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "code=" + code +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

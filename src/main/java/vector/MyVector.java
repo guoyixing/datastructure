@@ -3,6 +3,8 @@ package vector;
 import utils.Compare;
 import utils.Fib;
 
+import java.util.Arrays;
+
 /**
  * 扩充向量
  *
@@ -30,6 +32,19 @@ public class MyVector<T> {
      * 所包含的对象
      */
     private Object[] elem;
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.size; i++) {
+            sb.append(((T) elem[i]).toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public int getSize() {
+        return size;
+    }
 
     /**
      * 默认构造函数
@@ -314,7 +329,7 @@ public class MyVector<T> {
      * 1.元素不存在的时候
      * 2.元素存在多少个的时候
      * 对于这两种情况至少要保证
-     * 查询即便失败的情况下也应该给出适合插入的位置（或者给出无法插入的位置如-1）
+     * 查询即便失败的情况下也应该给出适合插入的位置
      * 如果出现重复的元素，则每组相同的元素也应该根据插入的顺序排序
      *
      * @param t    查询的元素
@@ -324,8 +339,8 @@ public class MyVector<T> {
      */
     public int search(T t, int lo, int hi, boolean flag) {
         if (flag) {
-            return binSearch(this.elem, t, lo, hi);
-        }else {
+            return binSearchC(this.elem, t, lo, hi);
+        } else {
             return fibSearch(this.elem, t, lo, hi);
         }
     }
@@ -339,13 +354,13 @@ public class MyVector<T> {
      * @param lo   区间的首位
      * @param hi   区间的末尾
      */
-    private int binSearch(Object[] objs, T t, int lo, int hi) {
+    private int binSearchA(Object[] objs, T t, int lo, int hi) {
         //每一次循环 都有可能出现3种情况
         while (lo < hi) {
             //获取这次区间的中间元素
             int mi = (lo + hi) >> 1;
             if (Compare.less(t, objs[mi])) {
-                //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi]
+                //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi)
                 hi = mi;
             } else if (Compare.less(objs[mi], t)) {
                 //情况2：t大于中间元素 则将搜索的范围缩小至中间元素的位置到hi范围 S(mi,hi)
@@ -387,5 +402,106 @@ public class MyVector<T> {
             }
         }
         return -1;
+    }
+
+    /**
+     * 二分查找B版本
+     * 相较于斐波那契查询 B版本更加的简单粗暴的解决了左右转向次数不均衡的问题
+     * 所有的分支也将只有两种情况
+     *
+     * @param objs 需要搜索的素组
+     * @param t    需要搜索的元素
+     * @param lo   区间的首位
+     * @param hi   区间的末尾
+     */
+    private int binSearchB(Object[] objs, T t, int lo, int hi) {
+        //每一次循环 都有可能出现2种情况  当有效的搜索区间小于1的时候 算法变会终止
+        while (1 < hi - lo) {
+            //获取这次区间的中间元素
+            int mi = (lo + hi) >> 1;
+            if (Compare.less(t, objs[mi])) {
+                //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi)
+                hi = mi;
+            } else {
+                //情况2：t不小于中间元素 则将搜索的范围缩小至中间元素的位置到末尾元素 S[mi,hi)
+                lo = mi;
+            }
+        }
+        //最后获取到的元素便是最有可能是相同元素的位置，如果这都没用命中 则命中失败
+        return t.equals(objs[lo]) ? lo : -1;
+    }
+
+    /**
+     * 二分查找C版本
+     * 在A，B两个版本中 算法都没有完全的执行查询的约定
+     * 查询即便失败的情况下也应该给出适合插入的位置
+     *
+     * @param objs 需要搜索的素组
+     * @param t    需要搜索的元素
+     * @param lo   区间的首位
+     * @param hi   区间的末尾
+     */
+    private int binSearchC(Object[] objs, T t, int lo, int hi) {
+        //每一次循环 都有可能出现2种情况  当有效的搜索区间小于1的时候 算法变会终止
+        while (lo < hi) {
+            //获取这次区间的中间元素
+            int mi = (lo + hi) >> 1;
+            if (Compare.less(t, objs[mi])) {
+                //情况1：S[lo,mi)
+                hi = mi;
+            } else {
+                //情况2：S(mi,hi)
+                lo = mi + 1;
+            }
+        }
+        return --lo;
+    }
+
+    /**
+     * 归并排序
+     *
+     * @param lo 区间的首位
+     * @param hi 区间的末尾
+     */
+    public void mergeSort(int lo, int hi) {
+        //单个元素无需处理
+        if (hi - lo < 2) {
+            return;
+        }
+        //获取中间数
+        int mi = (lo + hi) >> 1;
+        //左边的区间继续拆分
+        mergeSort(lo, mi);
+        //右边的区间继续拆分
+        mergeSort(mi, hi);
+        //将最终拆分的结果合并
+        merge(lo, mi, hi);
+    }
+
+    /**
+     * 归并排序中的合并算法
+     *
+     * @param lo 区间的首位
+     * @param mi 区间的中位
+     * @param hi 区间的末尾
+     */
+    private void merge(int lo, int mi, int hi) {
+        Object[] objA = Arrays.copyOfRange(this.elem, lo, hi);
+        int lb = mi - lo;
+        Object[] objB = new Object[lb];
+        for (int i = 0; i < lb; objB[i] = objA[i++]) {
+        }
+        int lc = hi - mi;
+        Object[] objC = Arrays.copyOfRange(this.elem, mi, hi);
+        for (int i = 0, j = 0, k = 0; j < lb; ) {
+            if (k < lc && Compare.less(objC[k], objB[j])) {
+                objA[i++] = objC[k++];
+            }
+            if (lc <= k || Compare.lessAndEquals(objB[j], objC[k])) {
+                objA[i++] = objB[j++];
+            }
+        }
+        // 把新数组中的数覆盖nums数组
+        System.arraycopy(objA, 0, this.elem, lo, objA.length);
     }
 }
