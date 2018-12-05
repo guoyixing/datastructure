@@ -1,13 +1,13 @@
 # datastructure
 数据结构
-##项目结构
+## 项目结构
 Main.java（测试启动类）<br/>
 |--test(测试用到的类)<br/>
 |--utils（工具类）<br/>
-    |--Compare.java（比较对象的大小）<br/>
-    |--Fib.java（斐波那契数列对象）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--Compare.java（比较对象的大小）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--Fib.java（斐波那契数列对象）<br/>
 |--vector（动态数组）<br/>
-    |--MyVector.java<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--MyVector.java<br/>
 ## vector：动态数组（可变向量）
 1.扩充算法<br/>
 2.缩容算法<br/>
