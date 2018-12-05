@@ -118,7 +118,7 @@ public class MyVector<T> {
         //缓存住原本向量中的数据
         Object[] oldElem = this.elem;
         //创建新的容器 并且将容量翻倍 this.capacity<<1 位运算左移1位 等价于乘2
-        this.elem = new Object[this.capacity << 1];
+        this.elem = new Object[(this.capacity << 1)];
         //拷贝数据到新的容器中
         for (int i = 0; i < this.size; i++) {
             this.elem[i] = oldElem[i];
@@ -132,9 +132,11 @@ public class MyVector<T> {
      * 相比扩容算法 缩容算法就要简单的多  截取多余的空间即可
      */
     private void shrink() {
-        //容器尚未盛满的时候不需要进行扩容
+        //容器存放量大于缩容范围
         if (this.size > this.capacity * LOAD_FACTOR) {
-            return;
+            for (int i = this.size; i < this.capacity; i++) {
+                this.elem[i] = null;
+            }
         }
         //容器的最小容量不得小于默认值
         this.capacity = Math.max(this.size, DEFAULT_CAPACITY);
@@ -159,13 +161,17 @@ public class MyVector<T> {
         return (T) this.elem[i];
     }
 
+    public void replace(int i, T t) {
+        this.elem[i] = t;
+    }
+
     /**
      * 插入算法
      *
      * @param r 所需要插入的地址
      * @param t 所需要插入的元素
      */
-    private int insert(int r, T t) {
+    public int insert(int r, T t) {
         //检测是否需要扩容
         expand();
         //自后向前遍历 如果需要插入到第x的位置上 只需要x位置上以及x之后的元素向数组的尾端移动一格，这样第x的位置将会被空出
@@ -345,6 +351,10 @@ public class MyVector<T> {
         }
     }
 
+    public int search(T t) {
+        return binSearchC(this.elem, t, 0, this.size);
+    }
+
     /**
      * 二分查找A版本
      * 算法复杂度 O(1.5*logn)
@@ -358,7 +368,7 @@ public class MyVector<T> {
         //每一次循环 都有可能出现3种情况
         while (lo < hi) {
             //获取这次区间的中间元素
-            int mi = (lo + hi) >> 1;
+            int mi = ((lo + hi) >> 1);
             if (Compare.less(t, objs[mi])) {
                 //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi)
                 hi = mi;
@@ -418,7 +428,7 @@ public class MyVector<T> {
         //每一次循环 都有可能出现2种情况  当有效的搜索区间小于1的时候 算法变会终止
         while (1 < hi - lo) {
             //获取这次区间的中间元素
-            int mi = (lo + hi) >> 1;
+            int mi = ((lo + hi) >> 1);
             if (Compare.less(t, objs[mi])) {
                 //情况1：t小于中间元素 则将搜索的范围缩小至0到中间元素的位置S[lo,mi)
                 hi = mi;
@@ -445,7 +455,7 @@ public class MyVector<T> {
         //每一次循环 都有可能出现2种情况  当有效的搜索区间小于1的时候 算法变会终止
         while (lo < hi) {
             //获取这次区间的中间元素
-            int mi = (lo + hi) >> 1;
+            int mi = ((lo + hi) >> 1);
             if (Compare.less(t, objs[mi])) {
                 //情况1：S[lo,mi)
                 hi = mi;
@@ -469,7 +479,7 @@ public class MyVector<T> {
             return;
         }
         //获取中间数
-        int mi = (lo + hi) >> 1;
+        int mi = ((lo + hi) >> 1);
         //左边的区间继续拆分
         mergeSort(lo, mi);
         //右边的区间继续拆分
