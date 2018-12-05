@@ -8,6 +8,10 @@ Main.java（测试启动类）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--Fib.java（斐波那契数列对象）<br/>
 |--vector（动态数组）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--MyVector.java<br/>
+|--tree（树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--btree（b树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTNode.java（b树节点）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTree.java（b树）<br/>
 ## vector：动态数组（可变向量）
 1.扩充算法<br/>
 2.缩容算法<br/>
@@ -23,3 +27,10 @@ Main.java（测试启动类）<br/>
 3.高效唯一化算法<br/>
 4.二分查询算法（三种二分查询算法A->B->c演进）<br/>
 5.斐波拉契查询算法<br/>
+## tree：树
+### btree：b树
+1.上溢修复算法<br/>
+2.下溢修复算法<br/>
+3.搜索算法<br/>
+4.插入算法<br/>
+5.删除算法<br/>
