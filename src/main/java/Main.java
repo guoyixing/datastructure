@@ -69,6 +69,7 @@ public class Main {
         bTree.remove(4);
         bTree.remove(5);
         bTree.remove(6);
+        bTree.remove(7);
 
         System.out.println(bTree);
     }
