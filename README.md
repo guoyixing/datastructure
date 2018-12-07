@@ -8,6 +8,9 @@ Main.java（测试启动类）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--Fib.java（斐波那契数列对象）<br/>
 |--vector（动态数组）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--MyVector.java<br/>
+|--list（链表）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--ListNode.java（链表节点）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--List.java（链表）<br/>
 |--tree（树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--btree（b树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTNode.java（b树节点）<br/>
@@ -27,6 +30,22 @@ Main.java（测试启动类）<br/>
 3.高效唯一化算法<br/>
 4.二分查询算法（三种二分查询算法A->B->c演进）<br/>
 5.斐波拉契查询算法<br/>
+## list：链表
+1.首节点插入<br/>
+2.尾节点插入<br/>
+3.在指定节点前方插入<br/>
+4.在指定节点后方插入<br/>
+5.节点删除算法<br/>
+6.链表拷贝算法<br/>
+7.遍历操作算法<br/>
+8.选择排序算法<br/>
+9.插入排序算法<br/>
+### 无序链表
+1.查询算法<br/>
+2.无序链表唯一化算法<br/>
+### 有序链表
+1.有序链表唯一化算法<br/>
+2.有序链表查询<br/>
 ## tree：树
 ### btree：b树
 1.上溢修复算法<br/>
