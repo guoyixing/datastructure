@@ -1,3 +1,4 @@
+import list.List;
 import test.Student;
 import tree.btree.BTNode;
 import tree.btree.BTree;
@@ -53,25 +54,35 @@ public class Main {
 //        myVector.mergeSort(0,myVector.getSize());
 //        System.out.println(myVector);
 
-        BTree<Integer> bTree = new BTree<>();
-        bTree.insert(1);
-        bTree.insert(2);
-        bTree.insert(3);
-        bTree.insert(4);
-        bTree.insert(5);
-        bTree.insert(6);
-        bTree.insert(7);
-
-        System.out.println(bTree);
-        bTree.remove(1);
-        bTree.remove(2);
-        bTree.remove(3);
-        bTree.remove(4);
-        bTree.remove(5);
-        bTree.remove(6);
-        bTree.remove(7);
-
-        System.out.println(bTree);
+//        BTree<Integer> bTree = new BTree<>();
+//        bTree.insert(1);
+//        bTree.insert(2);
+//        bTree.insert(3);
+//        bTree.insert(4);
+//        bTree.insert(5);
+//        bTree.insert(6);
+//        bTree.insert(7);
+//
+//        System.out.println(bTree);
+//        bTree.remove(1);
+//        bTree.remove(2);
+//        bTree.remove(3);
+//        bTree.remove(4);
+//        bTree.remove(5);
+//        bTree.remove(6);
+//        bTree.remove(7);
+//
+//        System.out.println(bTree);
+        Student student1 = new Student(1,"张三");
+        Student student2 = new Student(1,"张三");
+        Student student3 = new Student(2,"张三");
+        Student student4 = new Student(3,"张三");
+        List<Object> objectList = new List<>();
+        objectList.insertAsLast(student1);
+        objectList.insertAsLast(student2);
+        objectList.insertAsLast(student3);
+        objectList.insertAsLast(student4);
+        objectList.uniquify();
     }
 
 
