@@ -8,6 +8,7 @@ import vector.MyVector;
 
 /**
  * 测试类
+ *
  * @date 2018-12-04 15:44
  * @since 1.0.0
  */
@@ -73,17 +74,15 @@ public class Main {
 //        bTree.remove(7);
 //
 //        System.out.println(bTree);
-        Student student1 = new Student(1,"张三");
-        Student student2 = new Student(1,"张三");
-        Student student3 = new Student(2,"张三");
-        Student student4 = new Student(3,"张三");
-        List<Object> objectList = new List<>();
-        objectList.insertAsLast(student1);
-        objectList.insertAsLast(student2);
-        objectList.insertAsLast(student3);
-        objectList.insertAsLast(student4);
-        objectList.uniquify();
+
+        List<Integer> objectList = new List<>();
+        objectList.insertAsLast(3);
+        objectList.insertAsLast(2);
+        objectList.insertAsLast(1);
+        objectList.insertAsLast(6);
+        objectList.insertAsLast(5);
+        objectList.insertAsLast(4);
+        objectList.insertAsLast(8);
+        objectList.insertAsLast(9);
     }
-
-
 }

@@ -32,23 +32,25 @@ public class ListNode<T> {
 
     /**
      * 插入前驱节点，存入被引用对象t，并返回新节点位置
+     *
      * @param t 插入的元素
      */
-    public ListNode<T> insertAsPred(T t){
+    public ListNode<T> insertAsPred(T t) {
         ListNode<T> predListNode = new ListNode<>(t, this.pred, this);
-        this.pred.succ=predListNode;
-        this.pred=predListNode;
+        this.pred.succ = predListNode;
+        this.pred = predListNode;
         return predListNode;
     }
 
     /**
      * 插入后继节点，存入被引用对象t，并返回新节点位置
+     *
      * @param t 插入的元素
      */
-    public ListNode<T> insertAsSucc(T t){
+    public ListNode<T> insertAsSucc(T t) {
         ListNode<T> succListNode = new ListNode<>(t, this, this.succ);
-        this.succ.pred=succListNode;
-        this.succ=succListNode;
+        this.succ.pred = succListNode;
+        this.succ = succListNode;
         return succListNode;
     }
 }

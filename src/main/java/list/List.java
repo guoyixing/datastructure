@@ -47,7 +47,7 @@ public class List<T> {
     /**
      * 获取末尾节点
      */
-    public ListNode<T> list() {
+    public ListNode<T> last() {
         return trailer.pred;
     }
 
@@ -58,6 +58,10 @@ public class List<T> {
      */
     public T operator(int r) {
         return getNodeByRank(r).data;
+    }
+
+    public List() {
+        init();
     }
 
     /**
@@ -127,7 +131,7 @@ public class List<T> {
      */
     public void insertAsFirst(T t) {
         //插入前置哨兵的后继节点的前驱
-        this.first().insertAsPred(t);
+        insertA(header, t);
     }
 
     /**
@@ -137,7 +141,7 @@ public class List<T> {
      */
     public void insertAsLast(T t) {
         //插入后置哨兵的前驱的后继
-        trailer.pred.insertAsSucc(t);
+        insertB(trailer, t);
     }
 
     /**
@@ -227,7 +231,7 @@ public class List<T> {
     }
 
     /**
-     * 成批删除重复元素
+     * 有序链表唯一化
      */
     public int uniquify() {
         if (this.size < 2) {
@@ -238,6 +242,7 @@ public class List<T> {
         ListNode<T> p = first();
         //q为其后继
         ListNode<T> q;
+        //将紧挨着的元素对比 如果相同则删掉后者 不相同就将索引指向后者
         while (trailer != (q = p.succ)) {
             if (!p.data.equals(q.data)) {
                 p = q;
@@ -247,5 +252,75 @@ public class List<T> {
             }
         }
         return oldSize - size;
+    }
+
+    /**
+     * 有序链表查询 返回一个不大于当前对象的值
+     */
+    public ListNode<T> search(T t, int n, ListNode<T> p) {
+        while (0 <= n--) {
+            if (Compare.lessAndEquals((p = p.pred).data, t)) {
+                break;
+            }
+        }
+        return p;
+    }
+
+    /**
+     * 选择排序
+     * 从所有对象中挑选出最大的值，依次放到尾端
+     *
+     * @param p 开始的节点
+     * @param n 连续排序的n个元素
+     */
+    public void selectionSort(ListNode<T> p, int n) {
+        ListNode<T> head = p.pred;
+        ListNode<T> tail = p;
+        //将索引指向 最后一个要排序元素的后继， 从右向左排序
+        for (int i = 0; i < n; i++) {
+            tail = tail.succ;
+        }
+
+        while (1 < n) {
+            //找到最大的元素并将其移动到排序区间的最右边
+            insertB(tail, remove(selectMax(head.succ, n)));
+            //缩影向前启动一格
+            tail = tail.pred;
+            n--;
+        }
+    }
+
+    /**
+     * 查询最大的元素
+     *
+     * @param p 开始的位置
+     * @param n 后续的n个元素（查询范围）
+     */
+    public ListNode<T> selectMax(ListNode<T> p, int n) {
+        //记录最大值
+        ListNode<T> max = p;
+        for (ListNode<T> cur = p; 1 < n; n--) {
+            //如果比较的值大于等于max，max重新赋值
+            if (!Compare.less((cur = cur.succ).data, max.data)) {
+                max = cur;
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 插入排序
+     * 将访问的元素插入到不大于他的对象的后面
+     *
+     * @param p 开始的位置
+     * @param n 后续的n个元素（查询范围）
+     */
+    public void insertionSort(ListNode<T> p, int n) {
+        for (int r = 0; r < n; r++) {
+            //查找合适为位置，并插入
+            insertA(search(p.data, r, p), p.data);
+            p = p.succ;
+            remove(p.pred);
+        }
     }
 }
