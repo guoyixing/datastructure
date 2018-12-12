@@ -1,5 +1,7 @@
 package tree.bintree;
 
+import utils.Compare;
+
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.function.Consumer;
@@ -14,15 +16,15 @@ public class BinNode<T> {
     /**
      * 父节点，左子节点，右子节点
      */
-    protected BinNode<T> parent, lc, rc;
+    public BinNode<T> parent, lc, rc;
     /**
      * 存储的数据
      */
-    protected T data;
+    public T data;
     /**
      * 高度
      */
-    protected int height;
+    public int height;
 
     public BinNode() {
     }

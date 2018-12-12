@@ -1,8 +1,5 @@
 package tree.bintree;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 import java.util.function.Consumer;
 
@@ -80,7 +77,7 @@ public class BinTree<T> {
      */
     public BinNode<T> insertAsLc(BinNode<T> x, T t) {
         size++;
-        x.insertAsRc(t);
+        x.insertAsLc(t);
         updateHeightAbove(x);
         return x.lc;
     }
