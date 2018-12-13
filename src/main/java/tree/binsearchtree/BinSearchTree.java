@@ -14,7 +14,7 @@ public class BinSearchTree<T> extends BinTree<T> {
     /**
      * 热点，命中节点的父类
      */
-    BinNode<T> hot;
+    public BinNode<T> hot;
 
     /**
      * 搜索算法
@@ -36,7 +36,7 @@ public class BinSearchTree<T> extends BinTree<T> {
     /**
      * 插入算法
      *
-     * @param t 插入的算法
+     * @param t 插入的元素
      */
     public BinNode<T> insert(T t) {
         //查询t是否存在

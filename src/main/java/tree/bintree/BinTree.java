@@ -23,6 +23,7 @@ public class BinTree<T> {
         return size;
     }
 
+
     public boolean empty() {
         return root == null;
     }
@@ -120,19 +121,25 @@ public class BinTree<T> {
         return n;
     }
 
+    public boolean isRoot(BinNode<T> x) {
+        return x.parent == null;
+    }
+
+    public boolean isLChild(BinNode<T> x) {
+        return x.parent != null && x.parent.lc == x;
+    }
+
+    public boolean isRChild(BinNode<T> x) {
+        return x.parent != null && x.parent.rc == x;
+    }
+
     /**
-     * 清除和父节点的关联
+     * 判断左右节点
      *
      * @param x 操作的节点
      */
-    private void fromParentTo(BinNode<T> x) {
-        if (x.parent != null && x.parent.lc == x) {
-            x.parent.lc = null;
-        }
-        if (x.parent != null && x.parent.rc == x) {
-            x.parent.rc = null;
-        }
-        x.parent = null;
+    public BinNode<T> fromParentTo(BinNode<T> x) {
+        return isRoot(x) ? root : (isLChild(x) ? x.parent.lc : x.parent.rc);
     }
 
     /**

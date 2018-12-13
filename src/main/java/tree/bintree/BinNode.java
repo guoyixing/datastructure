@@ -26,10 +26,20 @@ public class BinNode<T> {
      */
     public int height;
 
+    public BinNode<T> replace(BinNode<T> t) {
+        this.parent = t.parent;
+        this.lc = t.lc;
+        this.rc = t.rc;
+        this.data = t.data;
+        this.height = t.height;
+        return this;
+    }
+
     public BinNode() {
     }
 
     public BinNode(T data, BinNode<T> parent) {
+        this.height = 0;
         this.parent = parent;
         this.data = data;
     }
