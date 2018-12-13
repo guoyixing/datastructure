@@ -17,6 +17,8 @@ Main.java（测试启动类）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BinTree.java（二叉树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--binsearchtree（二叉搜索树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BinSearchTree.java（二叉搜索树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--avl（avl树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--AVL.java（avl树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--btree（b树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTNode.java（b树节点）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTree.java（b树）<br/>
@@ -61,10 +63,15 @@ Main.java（测试启动类）<br/>
 6.中序遍历（递归、迭代）算法<br/>
 7.后序遍历（递归、迭代）算法<br/>
 8.层级遍历（迭代）算法<br/>
-### BinSearchTree：二叉搜索树（继承二叉树）
+### binsearchtree：二叉搜索树（继承二叉树）
 1.搜索算法<br/>
 2.插入算法<br/>
 3.删除算法<br/>
+### avl：AVL树（继承二叉搜索树）
+1.重写插入算法<br/>
+2.重新删除算法<br/>
+3.3+4重构算法（zig，zag的实现）<br/>
+4.AVL的自平衡算法<br/>
 ### btree：b树
 1.上溢修复算法<br/>
 2.下溢修复算法<br/>
