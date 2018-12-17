@@ -58,21 +58,21 @@ public class RBTree<T extends Comparable<T>> {
         root = null;
     }
 
-    public RBNode<T> parentOf(RBNode<T> node) { //获得父节点
+    public RBNode<T> parentOf(RBNode<T> node) {
         return node != null ? node.parent : null;
     }
 
-    public void setParent(RBNode<T> node, RBNode<T> parent) { //设置父节点
+    public void setParent(RBNode<T> node, RBNode<T> parent) {
         if (node != null) {
             node.parent = parent;
         }
     }
 
-    public boolean colorOf(RBNode<T> node) { //获得节点的颜色
+    public boolean colorOf(RBNode<T> node) {
         return node != null ? node.color : BLACK;
     }
 
-    public boolean isRed(RBNode<T> node) { //判断节点的颜色
+    public boolean isRed(RBNode<T> node) {
         return (node != null) && (node.color == RED);
     }
 
@@ -80,7 +80,7 @@ public class RBTree<T extends Comparable<T>> {
         return !isRed(node);
     }
 
-    public void setRed(RBNode<T> node) { //设置节点的颜色
+    public void setRed(RBNode<T> node) {
         if (node != null) {
             node.color = RED;
         }
@@ -243,7 +243,7 @@ public class RBTree<T extends Comparable<T>> {
          * 2. x是其父节点的右子节点，则先查找x的父节点p，然后对p再次进行这两个条件的判断
          */
         RBNode<T> p = x.parent;
-        while ((p != null) && (x == p.right)) { //对应情况2
+        while ((p != null) && (x == p.right)) {
             x = p;
             p = x.parent;
         }
@@ -389,7 +389,8 @@ public class RBTree<T extends Comparable<T>> {
         RBNode<T> parent, gparent;
         //需要修整的条件：父节点存在，且父节点的颜色是红色
         while (((parent = parentOf(node)) != null) && isRed(parent)) {
-            gparent = parentOf(parent);//获得祖父节点
+            //获得祖父节点
+            gparent = parentOf(parent);
             //若父节点是祖父节点的左子节点，下面else与其相反
             if (parent == gparent.left) {
                 //获得叔叔节点
@@ -476,8 +477,8 @@ public class RBTree<T extends Comparable<T>> {
                 replace = replace.left;
             }
 
-            //处理“后继节点”和“被删除节点的父节点”之间的关系
-            if (parentOf(node) != null) { //要删除的节点不是根节点
+            //处理“后继节点”和“被删除节点的父节点”之间的关系，要删除的节点不是根节点
+            if (parentOf(node) != null) {
                 if (node == parentOf(node).left) {
                     parentOf(node).left = replace;
                 } else {
@@ -635,8 +636,8 @@ public class RBTree<T extends Comparable<T>> {
     /**
      * key---节点的键值
      * direction--- 0:表示该节点是根节点
-     *              1:表示该节点是它的父节点的左子节点
-     *              2:表示该节点是它的父节点的右子节点
+     * 1:表示该节点是它的父节点的左子节点
+     * 2:表示该节点是它的父节点的右子节点
      */
     private void print(RBNode<T> tree, T key, int direction) {
         if (tree != null) {
