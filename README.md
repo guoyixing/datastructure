@@ -22,6 +22,8 @@ Main.java（测试启动类）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;|--btree（b树）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTNode.java（b树节点）<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--BTree.java（b树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;|--rbtree（红黑树）<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|--RBTree.java（红黑树）<br/>
 ## vector：动态数组（可变向量）
 1.扩充算法<br/>
 2.缩容算法<br/>
@@ -78,3 +80,12 @@ Main.java（测试启动类）<br/>
 3.搜索算法<br/>
 4.插入算法<br/>
 5.删除算法<br/>
+### rbtree：红黑树
+1.搜索算法（迭代）<br/>
+2.搜索算法（递归）<br/>
+3.查询中序遍历的后续节点<br/>
+4.查询中序遍历的前驱节点<br/>
+5.插入算法<br/>
+6.删除算法<br/>
+7.上溢修复算法<br/>
+8.下溢修复算法<br/>
